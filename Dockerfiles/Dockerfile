@@ -1,18 +1,18 @@
-FROM osrf/ros:humble-desktop-full-jammy
+FROM osrf/ros:humble-desktop-full
 
 # set the environment variable with the command ENV <key>=<value>, it can be replaced online
 ENV DEBIAN_FRONTEND=noninteractive
 # RUN is used to execute and add new layer on top of the base immage
-RUN apt-get update 
+RUN apt-get update --fix-missing
 RUN apt-get upgrade -y 
 RUN apt-get install -y ros-humble-plotjuggler
 
 RUN apt-get install -y \
     ros-humble-joint-state-publisher \
     ros-humble-joint-state-publisher-gui \
+    ros-humble-tf-transformations \
     ros-humble-xacro \
     ros-humble-rosbag2-storage-mcap \
-    pipx \
     chrony \
     tmux python3-pip\
     xterm \
@@ -60,7 +60,8 @@ USER ${USERNAME}
 # ********************************************************
 
 # Install the python packages cosi non vengono installati da root
-RUN pipx install numpy 
+RUN pip3 install numpy 
+RUN pip3 install opencv-contrib-python transforms3d
 # install gazebo ignition
 # RUN sudo apt-get install -y  curl lsb-release gnupg
 # RUN sudo curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpgecho "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
