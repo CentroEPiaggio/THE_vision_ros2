@@ -4,3 +4,6 @@
 [submodule "the_vision_ws/src/ros2_aruco"]
 	path = the_vision_ws/src/ros2_aruco
 	url = https://github.com/Cionix90/ros2_aruco.git
+[submodule "the_vision_ws/src/THE_ROS2_interfaces"]
+	path = the_vision_ws/src/THE_ROS2_interfaces
+	url = https://github.com/Cionix90/THE_ROS2_interfaces.git

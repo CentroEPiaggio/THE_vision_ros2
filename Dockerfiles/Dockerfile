@@ -1,8 +1,9 @@
-FROM osrf/ros:humble-desktop-full
+FROM osrf/ros:humble-desktop-full-jammy
 
 # set the environment variable with the command ENV <key>=<value>, it can be replaced online
 ENV DEBIAN_FRONTEND=noninteractive
 # RUN is used to execute and add new layer on top of the base immage
+RUN apt-get update
 RUN apt-get update --fix-missing
 RUN apt-get upgrade -y 
 RUN apt-get install -y ros-humble-plotjuggler
