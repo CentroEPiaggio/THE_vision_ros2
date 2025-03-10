@@ -36,7 +36,7 @@ def  generate_launch_description():
 
     aruco_tf_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            [FindPackageShare("ros2_aruco"), "/launch", "/aruco_recognition.launch.py"]
+            [FindPackageShare("ros2_aruco"), "/launch", "/aruco_tf_publisher.launch.py"]
         )
     )
 

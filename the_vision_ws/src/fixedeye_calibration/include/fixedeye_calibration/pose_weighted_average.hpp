@@ -61,13 +61,16 @@ namespace fixed_eye_calibration
                     reset();
             };
 
-            void w_ave_compute(Pose& mean_res,WeightType type=WeightType::MAHALANOBIS, bool do_reset=true)
+            Pose w_ave_compute(Pose& mean_res,WeightType type=WeightType::MAHALANOBIS, bool do_reset=true)
             {
+                Pose err;
                 weight_type_=type;
                 set_normalize_weight();
                 compute_average(mean_res);
+                compute_err(err,mean_res);
                 if(do_reset)
                     reset();
+                return err;
             }
 
         private:
@@ -82,6 +85,10 @@ namespace fixed_eye_calibration
             void convert_vector_to_pose(Pose& pose,PoseMeasure vect);
             
             void normalize_quaternion(Quaternion& quat);
+
+            void compute_err(Pose& err,Pose mean);
+
+
 
             void reset()
             {

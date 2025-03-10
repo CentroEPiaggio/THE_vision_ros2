@@ -127,7 +127,7 @@ namespace fixed_eye_calibration
             if(weight_type_ == WeightType::TRACE)
                 *wgt_it = cov_it->trace();
             else if(weight_type_ == WeightType::MAHALANOBIS)
-                *wgt_it = (*meas_it).transpose() * (*cov_it) * (*meas_it);
+                *wgt_it = (*meas_it).transpose() * (*cov_it).inverse() * (*meas_it);
             weight_sum += *wgt_it;
             wgt_it++;
             cov_it++;
@@ -197,4 +197,31 @@ namespace fixed_eye_calibration
         result.block<3,3>(0,0) = pos_cov;
         result.block<4,4>(3,3) = quat_cov;
     }
+    void WeightedPoseAverage::compute_err(Pose& err,Pose mean)
+    {
+        Eigen::Vector3d v_mean = Eigen::Vector3d(mean.position.x,mean.position.y,mean.position.z),v_act,v_err = Eigen::Vector3d::Zero();
+        Eigen::Quaterniond q_mean=Eigen::Quaterniond(mean.orientation.w,mean.orientation.x,mean.orientation.y,mean.orientation.z),q_act,q_err;
+        Eigen::Vector4d err_quat = Eigen::Vector4d::Zero();
+        std::list<PoseMeasure>::iterator meas_it = measures_.begin();
+        
+        while(meas_it!=measures_.end())
+        {
+            v_act = (*meas_it).block<3,1>(0,0);
+            q_act = Eigen::Quaterniond((*meas_it)[3],(*meas_it)[4],(*meas_it)[5],(*meas_it)[6]);
+            v_err += v_act-v_mean;
+            q_err = q_act * q_mean.inverse();
+            err_quat += Eigen::Vector4d(q_err.w(),q_err.x(),q_err.y(),q_err.z()); 
+            meas_it++;
+        }
+        v_err/=measures_.size();
+        err_quat/=measures_.size();
+        err.position.set__x(v_err[0]);  
+        err.position.set__y(v_err[1]);
+        err.position.set__z(v_err[2]);
+        err.orientation.set__w(err_quat[0]);    
+        err.orientation.set__x(err_quat[1]);
+        err.orientation.set__y(err_quat[2]);
+        err.orientation.set__z(err_quat[3]);
+    }
+
 }

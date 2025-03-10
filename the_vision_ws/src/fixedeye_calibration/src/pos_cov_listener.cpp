@@ -69,6 +69,7 @@ namespace fixed_eye_calibration
                     pose.position.set__x(t.transform.translation.x);
                     pose.position.set__y(t.transform.translation.y);
                     pose.position.set__z(t.transform.translation.z);
+                    // RCLCPP_INFO(this->get_logger(),"[%f,%f,%f]",pose.position.x,pose.position.y,pose.position.z);
                     pose_average_->add_measure(pose);
                 }
                 else
@@ -80,7 +81,7 @@ namespace fixed_eye_calibration
                         pose.position.set__x(t.transform.translation.x);
                         pose.position.set__y(t.transform.translation.y);
                         pose.position.set__z(t.transform.translation.z);
-
+                        // RCLCPP_INFO(this->get_logger(),"[%f,%f,%f]",pose.position.x,pose.position.y,pose.position.z);
                         pose_average_->add_measure(pose);
 
                     }
@@ -94,8 +95,8 @@ namespace fixed_eye_calibration
                 rclcpp::sleep_for(listen_wait_);
             }
             pose_average_->ave_and_cov_compute(cov,res->pose,false);
-            RCLCPP_INFO_STREAM(this->get_logger(),cov);
-            res->covariance.resize(49);
+            // RCLCPP_INFO(this->get_logger(),"[%f,%f,%f]",pose.position.x,pose.position.y,pose.position.z);
+            // RCLCPP_INFO_STREAM(this->get_logger(),cov);
             auto res_cov = cov.reshaped<Eigen::RowMajor>().transpose();
             for(int i =0 ; i  < 49 ; i++)
                 res->covariance[i] = res_cov[i];

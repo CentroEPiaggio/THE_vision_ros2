@@ -14,6 +14,7 @@ find_package(visualization_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(the_interfaces REQUIRED)
+find_package(std_srvs REQUIRED)
 find_package(Eigen3 REQUIRED)
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
@@ -25,12 +26,15 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   rclcpp
   Eigen3
   the_interfaces
+  std_srvs
 )
 add_library(${PROJECT_NAME}_nodes SHARED 
   src/pose_weighted_average.cpp
-  src/pos_cov_listener.cpp)
+  src/pos_cov_listener.cpp
+  src/fixedeye_calibrator.cpp)
 
 add_executable(listener_node src/pose_listener_node.cpp)
+add_executable(calibrator_node src/fixedeye_calibrator_node.cpp)
 ament_target_dependencies(listener_node ${THIS_PACKAGE_INCLUDE_DEPENDS})
 target_include_directories(${PROJECT_NAME}_nodes PUBLIC
 
@@ -41,6 +45,7 @@ target_include_directories(${PROJECT_NAME}_nodes PUBLIC
 ament_target_dependencies(${PROJECT_NAME}_nodes ${THIS_PACKAGE_INCLUDE_DEPENDS})
 
 target_link_libraries(listener_node ${PROJECT_NAME}_nodes)
+target_link_libraries(calibrator_node ${PROJECT_NAME}_nodes)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -75,7 +80,7 @@ ament_export_libraries(
 )
 
 install(
-  TARGETS listener_node 
+  TARGETS listener_node calibrator_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
