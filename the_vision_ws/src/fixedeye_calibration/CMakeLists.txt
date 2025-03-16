@@ -16,7 +16,7 @@ find_package(rclcpp REQUIRED)
 find_package(the_interfaces REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(Eigen3 REQUIRED)
-
+find_package(rcl_interfaces REQUIRED)
 set(THIS_PACKAGE_INCLUDE_DEPENDS
   tf2_ros
   tf2_eigen
@@ -27,11 +27,13 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   Eigen3
   the_interfaces
   std_srvs
+  rcl_interfaces
 )
 add_library(${PROJECT_NAME}_nodes SHARED 
   src/pose_weighted_average.cpp
   src/pos_cov_listener.cpp
-  src/fixedeye_calibrator.cpp)
+  src/fixedeye_calibrator.cpp
+  src/listen_broadcast_utils.cpp)
 
 add_executable(listener_node src/pose_listener_node.cpp)
 add_executable(calibrator_node src/fixedeye_calibrator_node.cpp)

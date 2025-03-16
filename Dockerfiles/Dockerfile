@@ -29,7 +29,10 @@ RUN apt-get install -y \
     ros-humble-rmw-cyclonedds-cpp \
     && apt-get clean
 # # install realsense library 
-RUN apt-get install -y ros-humble-realsense2-*
+RUN apt-get install -y ros-humble-realsense2-* \
+    ros-humble-generate-parameter-library \
+    && apt-get clean
+RUN sudo apt-get install -y  rapidjson-dev
 RUN apt-get update
 RUN apt-get upgrade -y
 

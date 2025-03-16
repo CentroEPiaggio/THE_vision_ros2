@@ -33,7 +33,7 @@ namespace fixed_eye_calibration
 
         void ListenTF(std::shared_ptr<ListenServiceReq> req, std::shared_ptr<ListenServiceRes> res);
     public:
-        TransformListener();
+        TransformListener(std::string name="transform_listener");
 
         ~TransformListener();
 
