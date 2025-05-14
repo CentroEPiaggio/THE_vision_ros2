@@ -13,3 +13,6 @@
 [submodule "the_vision_ws/src/rosx_introspection"]
 	path = the_vision_ws/src/rosx_introspection
 	url = https://github.com/facontidavide/rosx_introspection.git
+[submodule "the_vision_ws/src/THE_ROS2_interfaces"]
+	path = the_vision_ws/src/THE_ROS2_interfaces
+	url = https://github.com/CentroEPiaggio/THE_ROS2_interfaces.git
