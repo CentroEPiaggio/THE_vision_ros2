@@ -6,7 +6,7 @@
 	url = https://github.com/Cionix90/ros2_aruco.git
 [submodule "the_vision_ws/src/THE_ROS2_interfaces"]
 	path = the_vision_ws/src/THE_ROS2_interfaces
-	url = https://github.com/Cionix90/THE_ROS2_interfaces.git
+	url = https://github.com/CentroEPiaggio/THE_ROS2_interfaces.git
 [submodule "the_vision_ws/src/BehaviorTree.CPP"]
 	path = the_vision_ws/src/BehaviorTree.CPP
 	url = https://github.com/BehaviorTree/BehaviorTree.CPP.git
