@@ -6,7 +6,8 @@
                 "${workspaceFolder}/**",
                 "/opt/ros/humble/include/**",
                 "/opt/ros/humble/include/tf2_eigen",
-                "${workspaceFolder}/install/the_interfaces/include/the_interfaces/**"
+                "${workspaceFolder}/install/the_interfaces/include/the_interfaces/**",
+                "${workspaceFolder}/install/behaviortree_ros2/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

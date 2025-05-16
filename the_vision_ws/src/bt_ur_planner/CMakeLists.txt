@@ -29,7 +29,13 @@ set(THIS_PACKAGE_DEPS
     fixedeye_calibration
     tf2_eigen
 )
+add_executable(the_bt_scheduler src/bt_scheduler.cpp)
+target_include_directories(the_bt_scheduler PUBLIC
 
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+
+  $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(the_bt_scheduler ${THIS_PACKAGE_DEPS})
 
 add_library(listen_plugin SHARED 
 src/listen_tf_client_plugin.cpp
@@ -51,11 +57,15 @@ src/execute_trajectory_plugin.cpp)
 add_library(deserialize_utils_plugin SHARED 
 src/pose_deserialize.cpp)
 
+add_library(calibration_sampling SHARED 
+  src/calib_sampling.cpp)
+
 target_include_directories(listen_plugin PUBLIC
 
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 
   $<INSTALL_INTERFACE:include>)
+
 target_compile_definitions(listen_plugin PRIVATE  BT_PLUGIN_EXPORT )
 ament_target_dependencies(listen_plugin ${THIS_PACKAGE_DEPS})
 
@@ -100,6 +110,15 @@ target_include_directories(deserialize_utils_plugin PUBLIC
 target_compile_definitions(deserialize_utils_plugin PRIVATE  BT_PLUGIN_EXPORT )
 ament_target_dependencies(deserialize_utils_plugin ${THIS_PACKAGE_DEPS})
 
+
+target_include_directories(calibration_sampling PUBLIC
+
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+
+  $<INSTALL_INTERFACE:include>)
+target_compile_definitions(calibration_sampling PRIVATE  BT_PLUGIN_EXPORT )
+ament_target_dependencies(calibration_sampling ${THIS_PACKAGE_DEPS})
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
@@ -112,6 +131,10 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 install(
+  TARGETS the_bt_scheduler 
+  DESTINATION lib/${PROJECT_NAME}
+)
+install(
   TARGETS listen_plugin
   DESTINATION lib/${PROJECT_NAME}
 )
@@ -123,7 +146,7 @@ listen_plugin
   )
 
 install(
-  TARGETS tranform_plugin
+  TARGETS tranform_plugin 
   DESTINATION lib/${PROJECT_NAME}
 )
 install(TARGETS
@@ -175,5 +198,7 @@ install(TARGETS
   ARCHIVE DESTINATION share/${PROJECT_NAME}/bt_plugins
   RUNTIME DESTINATION share/${PROJECT_NAME}/bt_plugins
 )
+
   
 ament_package()
+

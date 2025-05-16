@@ -32,6 +32,7 @@ class ListenTransformService : public RosServiceNode<the_interfaces::srv::Listen
                 {
                     InputPort<std::string>("frame_id"),
                     InputPort<std::string>("child_frame_id"),
+                    InputPort<int>("sample"),
                     OutputPort<std::string>("pose_result"),
                     OutputPort<std::string>("covariance_result")
                 }

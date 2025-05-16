@@ -75,6 +75,10 @@
         "cfenv": "cpp",
         "variant": "cpp",
         "any": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "charconv": "cpp",
+        "ranges": "cpp",
+        "span": "cpp",
+        "valarray": "cpp"
     }
 }

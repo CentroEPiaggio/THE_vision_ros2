@@ -8,9 +8,7 @@ namespace fixed_eye_calibration
     {
         int sleep;
         this->declare_parameter<int>("listen_sleep",40);
-        this->declare_parameter<int>("sample_number",5);
 
-        listen_num_ = this->get_parameter("sample_number").as_int();
         sleep = this->get_parameter("listen_sleep").as_int();
         sleep *= std::pow(10,6);
         listen_wait_ = std::chrono::nanoseconds(sleep);
@@ -24,8 +22,6 @@ namespace fixed_eye_calibration
             "~/get_pose_cov",
             std::bind(&TransformListener::ListenTF,this,_1,_2)
             );
-        
-
     };
 
     TransformListener::~TransformListener()
@@ -44,7 +40,7 @@ namespace fixed_eye_calibration
             res->set__success(false);
         else
         {
-            for(int i = 0; i < listen_num_; i++)
+            for(int i = 0; i < req->sample; i++)
             {
                 RCLCPP_INFO(this->get_logger(),"Listen");
                 try

@@ -13,10 +13,13 @@ ListenTransformService::ListenTransformService(const std::string& instance_name,
 bool ListenTransformService::setRequest(Request::SharedPtr& request)
 {
     std::string frame_id, child_frame_id;
+    int sample;
     getInput("frame_id", frame_id);
     getInput("child_frame_id", child_frame_id);
+    getInput("sample",sample);
     request->frame_id = frame_id;
     request->child_frame_id = child_frame_id;
+    request->sample = sample;
     return true;
 }
 
